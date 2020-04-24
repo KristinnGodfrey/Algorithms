@@ -45,4 +45,5 @@ print(result['board'])
 print("points:", result['points'])
 ```
 output:
+
 ![](img/gAntOutput.png)
