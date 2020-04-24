@@ -1,4 +1,33 @@
- 'board': board }
+# Greedy Ant
+
+```python
+import numpy as np
+
+def createBoard():
+    rows = 6
+    cols = 5
+    board = [ [ 0 for i in range(rows) ] for j in range(cols) ]
+    board = np.array(board)
+    board[currentY][currentX] = 2
+    return board
+
+def setCandy(board, row, col):
+    board[row][col] = 1
+
+def moveAnt(board, points, currentY, currentX):
+    for i in board:
+        if currentY-1 > -1 and board[currentY-1][currentX+1]==1:
+            points += 1
+            currentY -= 1
+        elif currentY+1 > -1 and board[currentY+1][currentX+1]==1:
+            points += 1
+            currentY += 1
+        elif currentY > -1 and board[currentY][currentX+1]==1:
+            points += 1
+
+        currentX += 1
+  	board[currentY][currentX] = 2
+    return {'points': points, 'board': board }
 
 #init vars
 currentY = 2
@@ -16,4 +45,4 @@ print(result['board'])
 print("points:", result['points'])
 ```
 output:
-![](Screenshots/gAntOutput.png)
+![](img/gAntOutput.png)
