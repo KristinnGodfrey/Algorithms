@@ -1,14 +1,3 @@
-/******************************************************************************
- *  Compilation:  javac Date.java
- *  Execution:    java Date
- *  Dependencies: StdOut.java
- *
- *  An immutable data type for dates.
- *
- ******************************************************************************/
-
-package edu.princeton.cs.algs4;
-
 /**
  *  The {@code Date} class is an immutable data type to encapsulate a
  *  date (day, month, and year).

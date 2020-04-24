@@ -52,7 +52,9 @@ package edu.princeton.cs.algs4;
  *  @author Robert Sedgewick
  *  @author Kevin Wayne
  */
-public class DijkstraSP {
+public class DijkstraTwoSP {
+    
+
     private double[] distTo;          // distTo[v] = distance  of shortest s->v path
     private DirectedEdge[] edgeTo;    // edgeTo[v] = last edge on shortest s->v path
     private IndexMinPQ<Double> pq;    // priority queue of vertices
@@ -66,7 +68,9 @@ public class DijkstraSP {
      * @throws IllegalArgumentException if an edge weight is negative
      * @throws IllegalArgumentException unless {@code 0 <= s < V}
      */
-    public DijkstraSP(EdgeWeightedDigraph G, int s) {
+    
+
+    public DijkstraTwoSP(EdgeWeightedDigraph G, int s) {
         for (DirectedEdge e : G.edges()) {
             if (e.weight() < 0)
                 throw new IllegalArgumentException("edge " + e + " has negative weight");
@@ -147,6 +151,19 @@ public class DijkstraSP {
         }
         return path;
     }
+    public class SecondSP{  
+        public Path getSecondShortestPath(EdgeWeightedDigraph edgeWeightedDigraph, int source, int target) {
+            KShortestPaths kShortestPaths = new KShortestPaths();
+
+            List<Path> twoShortestPaths = kShortestPaths.getKShortestPaths(edgeWeightedDigraph, source, target, 2);
+
+            if (twoShortestPaths.size() == 2) {
+                return twoShortestPaths.get(1);
+            } else {
+                return null;
+            }
+        }      
+    }
 
 
     // check optimality conditions:
@@ -212,13 +229,89 @@ public class DijkstraSP {
      *
      * @param args the command-line arguments
      */
+
+    public Iterable<DirectedEdge> naestStysti (EdgeWeightedDigraph w, int s, int t){
+      //taka inn number a hlutum - thess vegna eru s og t int
+      DijkstraSP shortestPathsA = new DijkstraSP(w, s); //setjum inn graf og upphafspunkt 
+      double AkostnadurTilT = shortestPathsA.distTo(t);
+      for(DirectedEdge n: shortestPathsA.pathTo(t)){ //skilar iterable hlut af
+        //directed edges sem er i path fra s til t. n verdur hver hlutur
+        EdgeWeightedDigraph y = new EdgeWeightedDigraph(w.V()); //nyr hlutur med ollum hnutum //nema n
+        for(Edge m: w.edges()){ 
+          if(m != n){
+            y.addEdge(m); //y ætti ad vera alveg eins og w nema ekki med n 
+          }
+        }
+        DijkstraSP shortestPathsB = new DijkstraSP(y, s); 
+        double BkostnadurTilT = shortestPathsB.distTo(t);
+        if(AkostnadurTilT == BkostnadurTilT){ 
+          //bera saman gamla og nyja path 
+          //viljum ad thaer seu jafn kostnadarsamar til ad skila leid B 
+          return shortestPathsB.pathTo(t); //skila nyja pathinum
+        } 
+      }        
+    return null;   
+    }
+
+
+
+  
+public Iterable<DirectedEdge> TwoShortPaths (EdgeWeightedDigraph w, int s, int t){
+  DijkstraSP shortA = new DijkstraSP(w, s); 
+  double distToA = shortA.distTo(t);
+  for(DirectedEdge n: shortA.pathTo(t)){ 
+    EdgeWeightedDigraph y = new EdgeWeightedDigraph(w.V()); 
+    for(Edge m: w.edges()){ 
+      if(m != n){
+        y.addEdge(m); 
+      }
+    }
+    DijkstraSP shortB = new DijkstraSP(y, s); 
+    double distToB = shortB.distTo(t);
+    if(AkostnadurTilT == BkostnadurTilT){ 
+      return shortB.pathTo(t);
+    } 
+  }        
+  return null;
+}
+
+
+
+
+
+
+
+
+
+
+    public class DijkstraSecondSP {
+
+      public Path getSecondShortestPath(EdgeWeightedDigraph edgeWeightedDigraph, int source, int target) {
+          KShortestPaths kShortestPaths = new KShortestPaths();
+
+          List<Path> twoShortestPaths = kShortestPaths.getKShortestPaths(edgeWeightedDigraph, source, target, 2);
+
+          if (twoShortestPaths.size() == 2) {
+              return twoShortestPaths.get(1);
+          } else {
+              return null;
+          }
+      }
+  }
+
+    
+    
+
     public static void main(String[] args) {
         In in = new In(args[0]);
         EdgeWeightedDigraph G = new EdgeWeightedDigraph(in);
         int s = Integer.parseInt(args[1]);
 
         // compute shortest paths
-        DijkstraSP sp = new DijkstraSP(G, s);
+        DijkstraTwoSP sp = new DijkstraTwoSP(G, s);
+        double costToT = sp.distTo(t);
+
+        for(Di)
 
 
         // print shortest path
